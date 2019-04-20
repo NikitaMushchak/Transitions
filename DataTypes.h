@@ -26,6 +26,7 @@ struct TaskType2D
     boost::qvm::mat<double,2,2> D;
     double Ek;
     int_fast32_t Step, i;
+    double PotEnergy;
 };
 
 struct TaskType3D
@@ -33,6 +34,7 @@ struct TaskType3D
     boost::qvm::mat<double,3,3> D;
     double Ek;
     int_fast32_t Step, i;
+    double PotEnergy;
 };
 
 struct MacroParametrsType

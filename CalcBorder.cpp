@@ -11,9 +11,9 @@ CalcBorder::CalcBorder()
     boost::qvm::X(e[1])= 0.4;
     boost::qvm::Y(e[1])= boost::qvm::X(e[1]);//-0.1;
     boost::qvm::Z(e[1])= boost::qvm::X(e[1])*(MC_s6 - 3.)/(MC_2s3 - 3.);// -0.1;
-    boost::qvm::X(n) = 60;
-    boost::qvm::Y(n) = 60;//2*uint_fast32_t(X(n)*MC_1ds3);
-    boost::qvm::Z(n) = 60;//2*uint_fast32_t(X(n)*MC_1ds3);
+    boost::qvm::X(n) = 250;
+    boost::qvm::Y(n) = 250;//2*uint_fast32_t(X(n)*MC_1ds3);
+    boost::qvm::Z(n) = 250;//2*uint_fast32_t(X(n)*MC_1ds3);
     BorderPrecision = 1e-2;
     NStepA = 100;
 	NStepB = 1000;
