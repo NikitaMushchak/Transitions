@@ -6,8 +6,8 @@ void MD::setMPP()
     P_1d_M = 1.0/P_M;
     P_a = 1.0;
     P_a2 = MC_2ds3;
-    P_alfa = 13.0;
-    P_alfa2 =350.0;
+    P_alfa = 13.0/P_a;
+    P_alfa2 =350.0/P_a2;
     P_D = 1.0;
     P_D2= 0.4;
     P_a_cut = 0.5*(CSDFCC[9]+CSDFCC[10]); // было между 3 и 4 координационной сферой

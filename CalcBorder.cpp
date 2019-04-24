@@ -8,14 +8,14 @@ CalcBorder::CalcBorder()
     boost::qvm::X(e[0])= -0.1;
     boost::qvm::Y(e[0])= boost::qvm::X(e[0]);//-0.6;
     boost::qvm::Z(e[0])= boost::qvm::X(e[0])*(MC_s6 - 3.)/(MC_2s3 - 3.);//-0.6; // -0.6
-    boost::qvm::X(e[1])= 0.5;
+    boost::qvm::X(e[1])= 0.4;
     boost::qvm::Y(e[1])= boost::qvm::X(e[1]);//-0.1;
     boost::qvm::Z(e[1])= boost::qvm::X(e[1])*(MC_s6 - 3.)/(MC_2s3 - 3.);// -0.1;
     boost::qvm::X(n) = 150;
     boost::qvm::Y(n) = 150;//2*uint_fast32_t(X(n)*MC_1ds3);
     boost::qvm::Z(n) = 150;//2*uint_fast32_t(X(n)*MC_1ds3);
     BorderPrecision = 1e-2;
-    NStepA = 100;
+    NStepA = 5000;
 	NStepB = 1000;
     BPBP = BorderPrecision*BorderPrecision;
     ///SA = new StabilityAnalytically();

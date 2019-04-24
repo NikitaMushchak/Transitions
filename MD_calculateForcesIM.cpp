@@ -45,7 +45,7 @@ void MD::calculateForcesIM()
                 dr_m = boost::qvm::mag(dr);
                 _1d_r = 1.0/dr_m;
                 exp_a_r = exp(P_alfa*(P_a-dr_m));
-				exp_a2_r = exp(P_alfa2 * (P_a2 -dr_m) *(dr_m - P_a2));
+				exp_a2_r = exp(P_alfa2 * (P_a2 - dr_m) *(dr_m - P_a2));
                 ///C_coeff = _1d_r*_1d_r*Potential_F*exp_a_r*(Potential_alfa*(2.0*exp_a_r-1.0) + _1d_r*(exp_a_r-1.0));
                 f = ((P_F*exp_a_r*(exp_a_r-1.0) + P_F2 * exp_a2_r *( P_a2 - dr_m))*_1d_r)*dr;
                 F[i]-=f;

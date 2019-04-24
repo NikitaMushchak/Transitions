@@ -30,11 +30,23 @@ StabilityAnalytically::StabilityAnalytically():generator(time(0)), distribution(
     EpsDeform_const = 1e-6;
 
     P_D = 1.0;
-    P_alfa = 6.0;
+    P_D2= 0.4;
     P_a = 1.0;
+    P_alfa = 13.0/P_a;
+
+    P_alfa2 =350.0*MC_2ds3;
+
+    P_a2 = MC_2ds3;
+    P_alfa2/=P_a2;
+
     P_aCut = 0;
-    P_P1 = 2.0*P_D*P_alfa/P_a;
-    P_P2 = 2.0*P_D*P_alfa*P_alfa/(P_a*P_a);
+    P_P1 = 2.0*P_D*P_alfa;
+    P_P2 = 2.0*P_D*P_alfa*P_alfa;
+    P_F = 2.0*P_D*P_alfa;
+    P_F2 = 2.0*P_D2*P_alfa2;
+    P_C = P_F*P_alfa;
+    P_C2= P_F2;
+
 //std::cerr<<"R-2 "<<n.a[0]<<"\n";
 }
 
@@ -233,7 +245,7 @@ void StabilityAnalytically::checkStability(StabilityPointType &Pd)
 
 
         //Inv[0] = D.a[0][0]+D.a[1][1]+D.a[2][2];
-        //Inv[1] = D.a[0][0]*D.a[1][1]+D.a[0][0]*D.a[2][2]+D.a[1][1]*D.a[2][2]-D.a[0][1]*D.a[1][0]-D.a[0][2]*D.a[2][0]-D.a[1][2]*D.a[2][1];
+        //Inv[1] = D.a[0][0]*D.a[1][1]+D.a[ 0][0]*D.a[2][2]+D.a[1][1]*D.a[2][2]-D.a[0][1]*D.a[1][0]-D.a[0][2]*D.a[2][0]-D.a[1][2]*D.a[2][1];
 
         Inv[0] = D.a[0][0];
         Inv[1] = D.a[0][0]*D.a[1][1]-D.a[0][1]*D.a[1][0];
@@ -320,11 +332,15 @@ void StabilityAnalytically::calculateForces()
     {
         //std::cerr<<"F "<<i<<" "<<A[i]<<"\n";
         //std::cin.get();
-        if (A[i]<P_aCut)
+        if(A[i]<P_aCut)
         {
             exp_b_ra = exp( P_alfa*(P_a-A[i]) );
-            P1[i] = -P_P1*( exp_b_ra - 1.0 )*exp_b_ra; //силы взаимодействий
-            P2[i] = P_P2*( 2.0*exp_b_ra - 1.0 )*exp_b_ra; //жесткости связей ЦИКЛ ОТ 1 ДО Nvect
+            exp_a2_r = exp(P_alfa2 * (P_a2 - A[i]) *(A[i] - P_a2));
+            // (P_F*exp_a_r*(exp_a_r-1.0) + P_F2 * exp_a2_r *( P_a2 - dr_m)//
+            P1[i] = -P_P1*( exp_b_ra - 1.0 )*exp_b_ra -
+                    2. * P_F2 * exp_a2_r;  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            P2[i] = P_P2*( 2.0*exp_b_ra - 1.0 )*exp_b_ra +
+                        ; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ 1 пїЅпїЅ Nvect
             E += P_D*( exp_b_ra - 2.0 )*exp_b_ra;
 
             //std::cerr<<"F "<<i<<" "<<A[i]<<" "<<P1[i]<<" "<<P2[i]<<"\n";
@@ -364,7 +380,6 @@ void StabilityAnalytically::findCoordinationalSpheres()
         {
             if(fabs(dr_mm-CSD[j])<NearSphere)
             {
-
                 ++CSN[j];
                 //std::cerr<<"W1 "<<i<<" "<<j<<" "<<CSN[j]<<"\n";
                 goto FindSphere;
@@ -420,7 +435,7 @@ FindSphere:
     for(uint_fast32_t i=1; i<MaxCSDN; ++i)
     {
         SVp[i] = RSN;
-        RSN+=CSN[i]/2;//убираем симметричные вектора e[-k] = -e[k]
+        RSN+=CSN[i]/2;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ e[-k] = -e[k]
         //if(CSN[i]%2)std::cerr<<"ERRRRRRR!!!!\n\n\n";
         //std::cerr<<"Q "<<i<<" "<<RSN<<" "<<CSN[i]<<" "<<CSD[i]<<" "<<SVp[i]<<"\n";
         //std::cerr<<"Q3 "<<i<<" "<<CoordSphereParticlesNumber[i]<<" "<<SphereVectorsPosition[i]<<"\n";
